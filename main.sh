@@ -32,20 +32,19 @@ then
 	exit
 fi
 
-echo "Thanks for using vimirror by JaydenDev!"
 RAND=$RANDOM
 cp -r /etc/pacman.d/mirrorlist /tmp/$RAND
 
-if [ -z $EDITOR ];
-then
-	echo "EDITOR variable not set, falling back to default (vi)!"
-    	EDITOR="vi"
-fi	
+#if [[ $EDITOR == " " ]];
+#then
+#	echo "EDITOR variable not set, falling back to default (vi)!"
+#    	EDITOR="vi"
+#fi	
 
-$EDITOR /tmp/$RAND 2> /dev/null || echo "The selected editor is not installed or not in path!" && exit 1
+vim /tmp/$RAND # || echo "The selected editor is not installed or not in path!" && exit 1
 cp -r /etc/pacman.d/mirrorlist /tmp/mirrorlist.backup
 cat /tmp/$RAND > /etc/pacman.d/mirrorlist
-pacman -Sy 2> /dev/null
+pacman -Sy
 if [ $? -eq 0 ];
 then
     echo "The mirrors work!"
