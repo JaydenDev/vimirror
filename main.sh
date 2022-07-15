@@ -35,13 +35,12 @@ fi
 RAND=$RANDOM
 cp -r /etc/pacman.d/mirrorlist /tmp/$RAND
 
-#if [[ $EDITOR == " " ]];
-#then
-#	echo "EDITOR variable not set, falling back to default (vi)!"
-#    	EDITOR="vi"
-#fi	
+if ! [ -x "$(command -v vi)" ]; then
+  echo 'vi must be installed and in path!' >&2
+  exit 1
+fi
 
-vim /tmp/$RAND # || echo "The selected editor is not installed or not in path!" && exit 1
+vi /tmp/$RAND
 cp -r /etc/pacman.d/mirrorlist /tmp/mirrorlist.backup
 cat /tmp/$RAND > /etc/pacman.d/mirrorlist
 timeout 30 pacman -Syy || echo "Mirror is too slow, or you aren't connected to WiFi. You should pick better mirrors!" && exit
