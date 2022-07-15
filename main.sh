@@ -35,12 +35,12 @@ fi
 RAND=$RANDOM
 cp -r /etc/pacman.d/mirrorlist /tmp/$RAND
 
-if ! [ -x "$(command -v vi)" ]; then
-  echo 'vi must be installed and in path!' >&2
+if ! [ -x "$(command -v vim)" ]; then
+  echo 'vim must be installed and in path!' >&2
   exit 1
 fi
 
-vi /tmp/$RAND
+vim /tmp/$RAND
 cp -r /etc/pacman.d/mirrorlist /tmp/mirrorlist.backup
 cat /tmp/$RAND > /etc/pacman.d/mirrorlist
 timeout 30 pacman -Syy || echo "Mirror is too slow, or you aren't connected to WiFi. You should pick better mirrors!" && exit
@@ -48,7 +48,7 @@ if [ $? -eq 0 ];
 then
     echo "The mirrors work!"
     while true; do
-    read -p "Do you want to write your changes? If pacman ran too slowly, then you should pick a better mirror! [y/n]" yn
+    read -p "Do you want to write your changes? [y/n]" yn
     case $yn in
         [Yy]* ) exit 0;;
         [Nn]* ) rm /etc/pacman.d/mirrorlist; mv /tmp/mirrorlist.backup /etc/pacman.d/mirrorlist; break;;
