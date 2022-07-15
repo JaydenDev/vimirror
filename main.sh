@@ -44,7 +44,7 @@ cp -r /etc/pacman.d/mirrorlist /tmp/$RAND
 vim /tmp/$RAND # || echo "The selected editor is not installed or not in path!" && exit 1
 cp -r /etc/pacman.d/mirrorlist /tmp/mirrorlist.backup
 cat /tmp/$RAND > /etc/pacman.d/mirrorlist
-pacman -Sy
+pacman -Syy
 if [ $? -eq 0 ];
 then
     echo "The mirrors work!"
