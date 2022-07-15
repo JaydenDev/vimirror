@@ -44,7 +44,7 @@ cp -r /etc/pacman.d/mirrorlist /tmp/$RAND
 vim /tmp/$RAND # || echo "The selected editor is not installed or not in path!" && exit 1
 cp -r /etc/pacman.d/mirrorlist /tmp/mirrorlist.backup
 cat /tmp/$RAND > /etc/pacman.d/mirrorlist
-pacman -Syy
+timeout 30 pacman -Syy || echo "Mirror is too slow, or you aren't connected to WiFi. You should pick better mirrors!" && exit
 if [ $? -eq 0 ];
 then
     echo "The mirrors work!"
